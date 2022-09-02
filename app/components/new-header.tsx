@@ -94,12 +94,18 @@ export default function NewHeader() {
               Sponsors
             </Link>
             <Link
-              to="#"
+              to="/wais"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
               WAIS
             </Link>
-            <Popover className="relative">
+            <Link
+              to="/activities"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Activities
+            </Link>
+            {/* <Popover className="relative">
               {({ open }) => (
                 <>
                   <Popover.Button
@@ -156,7 +162,7 @@ export default function NewHeader() {
                   </Transition>
                 </>
               )}
-            </Popover>
+            </Popover> */}
           </Popover.Group>
           <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
             <a
