@@ -1355,11 +1355,6 @@ select {
   background-color: rgb(249 168 212 / var(--tw-bg-opacity));
 }
 
-.bg-yellow-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(202 138 4 / var(--tw-bg-opacity));
-}
-
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
@@ -1583,10 +1578,6 @@ select {
   font-weight: 400;
 }
 
-.uppercase {
-  text-transform: uppercase;
-}
-
 .capitalize {
   text-transform: capitalize;
 }
@@ -1674,11 +1665,6 @@ select {
 .text-blue-800 {
   --tw-text-opacity: 1;
   color: rgb(3 9 17 / var(--tw-text-opacity));
-}
-
-.text-blue {
-  --tw-text-opacity: 1;
-  color: rgb(24 82 164 / var(--tw-text-opacity));
 }
 
 .underline {

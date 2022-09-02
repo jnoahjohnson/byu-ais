@@ -38,13 +38,15 @@ export const getEventsToday = async () => {
     ));
 }
 
-export const checkInMember = async (eventId: string, memberId: string, numPeople: number): Promise<boolean> => {
+export const checkInMember = async (eventId: string, memberId: string, numPeople: number): Promise<string> => {
     const checkIfMemberIsCheckedIn = await eventMembers.select({
         filterByFormula: `AND({Event ID} = "${eventId}", {Net ID} = "${memberId}")`,
     }).all();
 
+    console.log("Checked in", checkIfMemberIsCheckedIn.length);
+
     if (checkIfMemberIsCheckedIn.length > 0) {
-        return true;
+        return "alreadyCheckedIn";
     }
 
     const createdMember = await eventMembers.create([
@@ -58,9 +60,11 @@ export const checkInMember = async (eventId: string, memberId: string, numPeople
         }
     ])
 
-    console.log(createdMember)
+    if (!createdMember) {
+        return "error";
+    }
 
-    return true;
+    return "success";
 }
 
 

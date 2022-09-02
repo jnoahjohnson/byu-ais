@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { Form, useActionData, useTransition } from "@remix-run/react";
+import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import ContentContainer from "~/components/layout/content-container";
 import {
@@ -10,7 +10,7 @@ import {
 } from "~/services/airtable.server";
 import IdForm from "~/components/check-in/id-form";
 import EventForm from "~/components/check-in/event-form";
-import { CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
 
 const error = {
   hidden: { opacity: 0, y: 20 },
@@ -72,19 +72,21 @@ export const action: ActionFunction = async ({ request }) => {
       return { error: "Please select an event" };
     }
 
-    const isCheckedIn = await checkInMember(
+    const checkInStatus = await checkInMember(
       eventId,
       userId,
       hasPlusOne ? 2 : 1
     );
 
-    if (!isCheckedIn) {
-      return { error: "Error checking in" };
-    }
+    console.log("checkInStatus", checkInStatus);
 
-    return {
-      checkedIn: true,
-    };
+    if (checkInStatus === "success") {
+      return { checkedIn: true };
+    } else if (checkInStatus === "alreadyCheckedIn") {
+      return { alreadyCheckedIn: true };
+    } else {
+      return { error: "Something went wrong" };
+    }
   }
 };
 
@@ -105,6 +107,8 @@ export default function CheckInPage() {
       setPageStep(2);
     } else if (data?.checkedIn) {
       setPageStep(3);
+    } else if (data?.alreadyCheckedIn) {
+      setPageStep(4);
     }
   }, [data]);
 
@@ -133,13 +137,29 @@ export default function CheckInPage() {
                 userId={data?.memberInfo?.netId ?? ""}
                 events={data?.events ?? []}
               />
-            ) : (
+            ) : pageStep == 3 ? (
               <div className="max-w-30 h-30">
                 <div className="rounded-full w-30 h-40 mx-auto flex items-center justify-center bg-green-600 text-white mb-2">
                   <CheckIcon className="w-24 h-24" />
                 </div>
                 <p className="font-semibold text-lg text-gray-700">
-                  Checked in, thank you!
+                  You are checked in! <br />
+                  <strong>
+                    Make sure to fill out the waivers for the event.
+                  </strong>{" "}
+                </p>
+              </div>
+            ) : (
+              <div className="max-w-30 h-30">
+                <div className="rounded-full w-30 h-40 mx-auto flex items-center justify-center bg-yellow-600 text-white mb-2">
+                  <InformationCircleIcon className="w-24 h-24" />
+                </div>
+                <p className="font-semibold text-lg text-gray-700">
+                  It looks like you already checked in... If this is a mistake,
+                  let us know or{" "}
+                  <a href="/check-in" className="text-blue underline">
+                    try again.
+                  </a>
                 </p>
               </div>
             )}
