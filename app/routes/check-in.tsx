@@ -45,7 +45,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     const member = await members
-      .select({ filterByFormula: `{Net ID} = '${netId}'` })
+      .select({ filterByFormula: `{Net ID} = '${netId.toLowerCase().trim()}'` })
       .firstPage();
 
     if (member.length === 0) {

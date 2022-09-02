@@ -12,6 +12,7 @@ export default function IdForm() {
             type="netId"
             name="netId"
             id="netId"
+            spellCheck="false"
             disabled={transition.state === "submitting"}
             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-4 mb-1 disabled:bg-gray-50 transition-all duration-100 bg-white"
             placeholder="Enter your Net ID"
