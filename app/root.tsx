@@ -41,7 +41,7 @@ export default function App() {
       </head>
       <body className="flex flex-col min-h-full">
         <NewHeader />
-        <div className="w-full h-24" />
+        <div className="w-full h-20" />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

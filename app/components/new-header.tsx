@@ -3,8 +3,12 @@ import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
+  CalendarDaysIcon,
+  CodeBracketIcon,
   CpuChipIcon,
   CursorArrowRaysIcon,
+  InformationCircleIcon,
+  UserGroupIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -24,6 +28,29 @@ const activities = [
       "Learn about importnat skills that will help you get into the IS program.",
     href: "#",
     icon: CursorArrowRaysIcon,
+  },
+];
+
+const mobileLinks = [
+  {
+    name: "About Us",
+    href: "/about",
+    icon: InformationCircleIcon,
+  },
+  {
+    name: "Sponsors",
+    href: "/sponsors",
+    icon: UserGroupIcon,
+  },
+  {
+    name: "WAIS",
+    href: "/wais",
+    icon: CodeBracketIcon,
+  },
+  {
+    name: "Activities",
+    href: "/activities",
+    icon: CalendarDaysIcon,
   },
 ];
 
@@ -55,7 +82,7 @@ export default function NewHeader() {
 
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
             <Link
-              to="#"
+              to="/about"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
               About
@@ -176,7 +203,7 @@ export default function NewHeader() {
               </div>
               <div className="mt-6">
                 <nav className="grid gap-y-8">
-                  {activities.map((item) => (
+                  {mobileLinks.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
@@ -195,12 +222,12 @@ export default function NewHeader() {
               </div>
             </div>
             <div className="space-y-6 py-6 px-5">
-              <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+              {/* <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                 <Link
                   to="#"
                   className="text-base font-medium text-gray-900 hover:text-gray-700"
                 >
-                  Pricing
+                  Sponsor
                 </Link>
 
                 <Link
@@ -208,8 +235,8 @@ export default function NewHeader() {
                   className="text-base font-medium text-gray-900 hover:text-gray-700"
                 >
                   Docs
-                </Link>
-              </div>
+                </Link> 
+              </div> */}
               <div>
                 <a
                   href="https://marriott.byu.edu/clubs/directory"

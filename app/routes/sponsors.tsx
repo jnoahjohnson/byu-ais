@@ -1,6 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import ContentContainer from "~/components/layout/content-container";
+import PageHeader from "~/components/page-header";
 
 import { getSponsors } from "~/services/airtable.server";
 
@@ -16,16 +17,14 @@ export default function SponsorsPage() {
   }>();
 
   return (
-    <div className="py-6">
+    <div className="py-8">
       <ContentContainer>
-        <header className="pb-6">
-          <h1 className="text-4xl font-extrabold">Sponsors</h1>
-          <p className="max-w-xl text-lg text-gray-700">
-            We have incredible sponsors. They support the club activities and
+        <PageHeader
+          title="Sponsors"
+          subtitle=" We have incredible sponsors. They support the club activities and
             students. Throughout the semester there are info sessions with our
-            sponsors to learn more abou the opportunities that they provide
-          </p>
-        </header>
+            sponsors to learn more abou the opportunities that they provide"
+        />
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
           {sponsors.map(({ name, logo }) => (
             <li

@@ -10,6 +10,8 @@ import { LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import ContentContainer from "~/components/layout/content-container";
 import { getSponsors, members, sponsors } from "~/services/airtable.server";
+import { activityData } from "~/data/data";
+import ActivityOverview from "~/components/activities/activity-overview";
 
 const features = [
   {
@@ -32,37 +34,6 @@ const features = [
       "Looking for a great place for an internship or full time job? Our sponsors hire more students than anyone else!",
     icon: UserGroupIcon,
     href: "/sponsors",
-  },
-];
-
-const activities = [
-  {
-    name: "Tech Talks",
-    description:
-      "Mainly targeted for people in the program (but all are welcome), tech talks are ways that you can learn about new technologies and career paths",
-    icon: CpuChipIcon,
-    href: "/tech-talks",
-  },
-  {
-    name: "IS Academy",
-    description:
-      "Mainly targeted for people before entering the program (but all are welcome), IS Academy will prepare you to apply and be successful in the IS program.",
-    icon: ComputerDesktopIcon,
-    href: "/tech-talks",
-  },
-  {
-    name: "Social Activities",
-    description:
-      "We have many opportunities for you to enjoy activities an dfood while socializing with other members of AIS.",
-    icon: UserGroupIcon,
-    href: "/tech-talks",
-  },
-  {
-    name: "Info Sessions",
-    description:
-      "Our sponsors will come in for info sessions where you can talk with employees and hear about career opportunities.",
-    icon: InformationCircleIcon,
-    href: "/tech-talks",
   },
 ];
 
@@ -103,7 +74,7 @@ export default function Index() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 py-12 text-center">
             {features.map((feature) => (
               <div key={feature.name} className="pt-6">
-                <Link to="/">
+                <Link to={feature.href}>
                   <div className="flow-root rounded-lg bg-slate-50 px-6 pb-8 hover:shadow-lg hover:bg-slate-100 transition-all duration-200">
                     <div className="-mt-6">
                       <div>
@@ -145,47 +116,21 @@ export default function Index() {
               </p>
             </div>
 
-            <div className="mt-10">
-              <dl className="space-y-10 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10 md:space-y-0">
-                {activities.map((activity) => (
-                  <div key={activity.name} className="relative">
-                    <dt>
-                      <div className="absolute flex h-12 w-12 items-center justify-center rounded-md bg-slate-50 shadow text-blue-600">
-                        <activity.icon className="h-6 w-6" aria-hidden="true" />
-                      </div>
-                      <p className="ml-16 text-lg font-medium leading-6 text-blue-900">
-                        {activity.name}
-                      </p>
-                    </dt>
-                    <dd className="mt-2 ml-16 text-base text-gray-500">
-                      {activity.description}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-
-            <div className="py-12">
-              <iframe
-                title="ais-calendar"
-                src="https://calendar.google.com/calendar/embed?src=ais.byu%40gmail.com&ctz=America%2FDenver"
-                width="800"
-                height="600"
-                className="mx-auto max-w-full"
-                scrolling="no"
-              ></iframe>
-            </div>
+            <ActivityOverview />
           </div>
         </div>
       </ContentContainer>
 
       <div className="bg-white">
         <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-          <p className="text-center text-lg font-semibold text-gray-600">
-            Sponsors to support you in your career
+          <h2 className="text-center text-2xl font-semibold text-gray-800">
+            Sponsors that can help you grow
+          </h2>
+          <p className="text-center text-md font-semibold text-gray-600 mt-3">
+            Featured Sponsors
           </p>
 
-          <div className="mt-6 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-8">
+          <div className="mt-1 grid grid-cols-2 gap-0.5 md:grid-cols-3 ">
             {featuredSponsors.map((sponsor: any) => (
               <div
                 className="col-span-1 flex justify-center bg-gray-50 py-8 px-8"
@@ -200,7 +145,7 @@ export default function Index() {
             ))}
             {featuredSponsors.length % 3 !== 0 && (
               <div
-                className="col-span-1 flex justify-center items-center bg-gray-50 py-8 px-8"
+                className="col-span-1 justify-center items-center bg-gray-50 py-8 px-8 md:flex hidden"
                 key="others"
               >
                 <p className="font-bold">Many More...</p>
@@ -227,12 +172,14 @@ export default function Index() {
             In just the BYU chapter alone! Not to mention the other 65 chapters
             worldwide.
           </h3>
-          <Link
-            to="/join"
+          <a
+            href="https://marriott.byu.edu/clubs/directory"
+            target="_blank"
+            rel="noreferrer"
             className="mx-auto bg-white text-gray-800 px-4 py-2 rounded font-bold text-lg"
           >
             Join Today
-          </Link>
+          </a>
         </ContentContainer>
       </div>
     </>
