@@ -1073,10 +1073,6 @@ select {
   max-width: 32rem;
 }
 
-.max-w-full {
-  max-width: 100%;
-}
-
 .flex-shrink-0 {
   flex-shrink: 0;
 }

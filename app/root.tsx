@@ -1,8 +1,4 @@
-import type {
-  LoaderFunction,
-  MetaFunction,
-  LinksFunction,
-} from "@remix-run/node";
+import type { MetaFunction, LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -12,9 +8,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import Footer from "./components/footer";
-import Header from "./components/header";
 import NewHeader from "./components/new-header";
-import { getClient } from "./lib/sanity/get-client";
 
 import styles from "./tailwind.css";
 
@@ -34,24 +28,25 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "AIS - BYU",
   viewport: "width=device-width,initial-scale=1",
 });
 
 export default function App() {
   return (
-    <html lang="en" className="min-h-full">
+    <html lang="en" className="h-full">
       <head>
         <Meta />
         <Links />
       </head>
       <body className="flex flex-col min-h-full">
         <NewHeader />
+        <div className="w-full h-24" />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-        <div className="mt-auto">
+        <div className="mt-auto ">
           <Footer />
         </div>
       </body>

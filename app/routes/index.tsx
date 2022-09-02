@@ -6,8 +6,10 @@ import {
   ComputerDesktopIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "@remix-run/react";
+import { LoaderFunction } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import ContentContainer from "~/components/layout/content-container";
+import { getSponsors, members, sponsors } from "~/services/airtable.server";
 
 const features = [
   {
@@ -64,7 +66,19 @@ const activities = [
   },
 ];
 
+export const loader: LoaderFunction = async ({}) => {
+  const sponsorList = await getSponsors();
+
+  return {
+    featuredSponsors: sponsorList.filter(
+      (sponsor) => sponsor.level === "Platinum"
+    ),
+  };
+};
+
 export default function Index() {
+  const { featuredSponsors } = useLoaderData();
+
   return (
     <>
       <div className="w-full h-[515px] relative text-white flex items-center justify-start flex-col">
@@ -157,7 +171,7 @@ export default function Index() {
                 src="https://calendar.google.com/calendar/embed?src=ais.byu%40gmail.com&ctz=America%2FDenver"
                 width="800"
                 height="600"
-                className="mx-auto"
+                className="mx-auto max-w-full"
                 scrolling="no"
               ></iframe>
             </div>
@@ -172,48 +186,26 @@ export default function Index() {
           </p>
 
           <div className="mt-6 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-8">
-            <div className="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
-              <img
-                className="max-h-12"
-                src="https://tailwindui.com/img/logos/transistor-logo-gray-400.svg"
-                alt="Workcation"
-              />
-            </div>
-            <div className="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
-              <img
-                className="max-h-12"
-                src="https://tailwindui.com/img/logos/mirage-logo-gray-400.svg"
-                alt="Mirage"
-              />
-            </div>
-            <div className="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
-              <img
-                className="max-h-12"
-                src="https://tailwindui.com/img/logos/tuple-logo-gray-400.svg"
-                alt="Tuple"
-              />
-            </div>
-            <div className="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
-              <img
-                className="max-h-12"
-                src="https://tailwindui.com/img/logos/laravel-logo-gray-400.svg"
-                alt="Laravel"
-              />
-            </div>
-            <div className="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
-              <img
-                className="max-h-12"
-                src="https://tailwindui.com/img/logos/statickit-logo-gray-400.svg"
-                alt="StaticKit"
-              />
-            </div>
-            <div className="col-span-1 flex justify-center bg-gray-50 py-8 px-8">
-              <img
-                className="max-h-12"
-                src="https://tailwindui.com/img/logos/statamic-logo-gray-400.svg"
-                alt="Statamic"
-              />
-            </div>
+            {featuredSponsors.map((sponsor: any) => (
+              <div
+                className="col-span-1 flex justify-center bg-gray-50 py-8 px-8"
+                key={sponsor.name}
+              >
+                <img
+                  className="max-h-12"
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                />
+              </div>
+            ))}
+            {featuredSponsors.length % 3 !== 0 && (
+              <div
+                className="col-span-1 flex justify-center items-center bg-gray-50 py-8 px-8"
+                key="others"
+              >
+                <p className="font-bold">Many More...</p>
+              </div>
+            )}
           </div>
           <div className="text-center mt-4">
             <Link

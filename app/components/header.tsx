@@ -26,7 +26,7 @@ const navLinks = [
   },
   {
     label: "Join",
-    href: "/join",
+    href: "https://marriott.byu.edu/clubs/directory",
   },
 ];
 

@@ -33,7 +33,7 @@ function classNames(...classes: string[]) {
 
 export default function NewHeader() {
   return (
-    <Popover className=" bg-white z-50 fixed top-0 w-full left-0 right-0">
+    <Popover className="bg-white z-50 fixed top-0 w-full left-0 right-0">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
@@ -52,25 +52,26 @@ export default function NewHeader() {
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
           </div>
-          <Link
-            to="#"
-            className="text-base font-medium text-gray-500 hover:text-gray-900"
-          >
-            About
-          </Link>
-          <Link
-            to="/sponsors"
-            className="text-base font-medium text-gray-500 hover:text-gray-900"
-          >
-            Sponsors
-          </Link>
-          <Link
-            to="#"
-            className="text-base font-medium text-gray-500 hover:text-gray-900"
-          >
-            WAIS
-          </Link>
+
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
+            <Link
+              to="#"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              About
+            </Link>
+            <Link
+              to="/sponsors"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Sponsors
+            </Link>
+            <Link
+              to="#"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              WAIS
+            </Link>
             <Popover className="relative">
               {({ open }) => (
                 <>
@@ -130,12 +131,16 @@ export default function NewHeader() {
               )}
             </Popover>
           </Popover.Group>
-          <Link
-            to="#"
-            className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
-          >
-            Join AIS
-          </Link>
+          <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+            <a
+              href="https://marriott.byu.edu/clubs/directory"
+              target="_blank"
+              rel="noreferrer"
+              className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+            >
+              Join AIS
+            </a>
+          </div>
         </div>
       </div>
 
@@ -206,12 +211,14 @@ export default function NewHeader() {
                 </Link>
               </div>
               <div>
-                <Link
-                  to="#"
+                <a
+                  href="https://marriott.byu.edu/clubs/directory"
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
                 >
                   Join AIS
-                </Link>
+                </a>
               </div>
             </div>
           </div>
