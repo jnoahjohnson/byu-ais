@@ -1,6 +1,5 @@
 import Airtable from "airtable";
-
-
+import { DateTime } from "luxon";
 
 const airtable = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY });
 
@@ -23,8 +22,12 @@ export const getSponsors = async () => {
 }
 
 export const getEventsToday = async () => {
-    const records = await events.select({}).all();
-
+    const dateTime = DateTime.now().setZone('America/Denver').toFormat('MM/dd/yyyy')
+    console.log(dateTime)
+    const records = await events.select({
+        filterByFormula: `IS_SAME({Date},DATETIME_FORMAT(SET_TIMEZONE(TODAY(), 'America/Denver'),'M/D/Y'))`,
+    }).all();
+    
     return records.map((record: any) => (
         {
             id: record.id,
