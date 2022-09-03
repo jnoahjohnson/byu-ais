@@ -40,7 +40,11 @@ export const action: ActionFunction = async ({ request }) => {
   if (formStep === "id") {
     const netId = formData.get("netId");
 
-    if (typeof netId !== "string") {
+    if (
+      typeof netId !== "string" ||
+      !netId ||
+      !netId.replace(/\s/g, "").length
+    ) {
       return { error: "Please enter your netId" };
     }
 
