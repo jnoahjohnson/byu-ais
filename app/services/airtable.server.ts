@@ -23,9 +23,7 @@ export const getSponsors = async () => {
 }
 
 export const getEventsToday = async () => {
-    const records = await events.select({
-        filterByFormula: `{Date} = TODAY()`,
-    }).all();
+    const records = await events.select({}).all();
 
     return records.map((record: any) => (
         {
