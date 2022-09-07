@@ -21,6 +21,7 @@ export const getSponsors = async () => {
     ));
 }
 
+
 export const getEventsToday = async () => {
     const dateTime = DateTime.now().setZone('America/Denver').toFormat('MM/dd/yyyy')
     console.log(dateTime)
