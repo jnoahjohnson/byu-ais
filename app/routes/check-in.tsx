@@ -146,12 +146,6 @@ export default function CheckInPage() {
                 <div className="rounded-full w-30 h-40 mx-auto flex items-center justify-center bg-green-600 text-white mb-2">
                   <CheckIcon className="w-24 h-24" />
                 </div>
-                <p className="font-semibold text-lg text-gray-700">
-                  You are checked in! <br />
-                  <strong>
-                    Make sure to fill out the waivers for the event.
-                  </strong>{" "}
-                </p>
               </div>
             ) : (
               <div className="max-w-30 h-30">
