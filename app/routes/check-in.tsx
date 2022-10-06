@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { Form, Link, useActionData, useTransition } from "@remix-run/react";
+import { useActionData } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import ContentContainer from "~/components/layout/content-container";
 import {

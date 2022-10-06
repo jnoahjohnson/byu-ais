@@ -2,15 +2,11 @@ import {
   QuestionMarkCircleIcon,
   CheckIcon,
   UserGroupIcon,
-  CpuChipIcon,
-  ComputerDesktopIcon,
-  InformationCircleIcon,
 } from "@heroicons/react/24/outline";
-import { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import ContentContainer from "~/components/layout/content-container";
-import { getSponsors, members, sponsors } from "~/services/airtable.server";
-import { activityData } from "~/data/data";
+import { getSponsors } from "~/services/airtable.server";
 import ActivityOverview from "~/components/activities/activity-overview";
 
 const features = [
