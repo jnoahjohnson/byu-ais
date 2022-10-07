@@ -4,7 +4,7 @@ export const activityData = [
     {
       name: "Tech Talks",
       description:
-        "Mainly targeted for people in the program (but all are welcome), tech talks are ways that you can learn about new technologies and career paths",
+        "Mainly targeted for people in the program (but all are welcome), tech talks are ways that you can learn about new technologies and career paths. Come and have fun!",
       icon: CpuChipIcon,
       href: "/tech-talks",
     },
