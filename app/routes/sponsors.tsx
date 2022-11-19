@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import ContentContainer from "~/components/layout/content-container";
 import PageHeader from "~/components/page-header";
@@ -8,7 +9,14 @@ import { getSponsors } from "~/services/airtable.server";
 export const loader: LoaderFunction = async () => {
   const sponsors = await getSponsors();
 
-  return { sponsors };
+  return json(
+    { sponsors },
+    {
+      headers: {
+        "Cache-Control": `public, max-age=43200, s-maxage=43200`,
+      },
+    }
+  );
 };
 
 export default function SponsorsPage() {

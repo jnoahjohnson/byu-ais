@@ -5,31 +5,12 @@ import {
   Bars3Icon,
   CalendarDaysIcon,
   CodeBracketIcon,
-  CpuChipIcon,
-  CursorArrowRaysIcon,
   InformationCircleIcon,
+  MicrophoneIcon,
   UserGroupIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from "@remix-run/react";
-
-const activities = [
-  {
-    name: "Tech Talks",
-    description:
-      "Learn about career paths and new technologies with other students.",
-    href: "#",
-    icon: CpuChipIcon,
-  },
-  {
-    name: "IS Academy",
-    description:
-      "Learn about importnat skills that will help you get into the IS program.",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-];
 
 const mobileLinks = [
   {
@@ -52,11 +33,12 @@ const mobileLinks = [
     href: "/activities",
     icon: CalendarDaysIcon,
   },
+  {
+    name: "Podcast",
+    href: "/podcast",
+    icon: MicrophoneIcon,
+  },
 ];
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function NewHeader() {
   return (
@@ -84,26 +66,37 @@ export default function NewHeader() {
             <Link
               to="/about"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
+              prefetch="intent"
             >
               About
             </Link>
             <Link
               to="/sponsors"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
+              prefetch="intent"
             >
               Sponsors
             </Link>
             <Link
               to="/wais"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
+              prefetch="intent"
             >
               WAIS
             </Link>
             <Link
               to="/activities"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
+              prefetch="intent"
             >
               Activities
+            </Link>
+            <Link
+              to="/podcast"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+              prefetch="intent"
+            >
+              Podcast
             </Link>
             {/* <Popover className="relative">
               {({ open }) => (
