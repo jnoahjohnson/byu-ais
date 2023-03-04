@@ -14,7 +14,7 @@ export default function IdForm() {
             id="netId"
             spellCheck="false"
             disabled={transition.state === "submitting"}
-            className="block w-full rounded-md border-gray-300 bg-gray-200 shadow-lg focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-4 mb-3 disabled:bg-gray-50 transition-all duration-100 "
+            className="block w-full rounded-md border-gray-400 border-2 bg-gray-50 shadow-lg focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-4 mb-3 disabled:bg-gray-50 transition-all duration-100 "
             placeholder="Enter your Net ID"
           />
         </div>
@@ -23,7 +23,7 @@ export default function IdForm() {
           disabled={transition.state === "submitting"}
           className={`px-4 py-2 rounded text-white transition-all duration-200 hover:shadow-lg bg-blue-500 mb-2 disabled:animate-pulse`}
         >
-          Check In
+          Continue
         </button>
       </div>
     </Form>

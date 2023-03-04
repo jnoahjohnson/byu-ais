@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionFunction } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import ContentContainer from "~/components/layout/content-container";
-import {
-  checkInMember,
-  getEventsToday,
-  members,
-} from "~/services/airtable.server";
+import { shirtCheckIn } from "~/services/airtable.server";
 import IdForm from "~/components/check-in/id-form";
-import EventForm from "~/components/check-in/event-form";
 import { CheckIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
+import { checkIfMember } from "~/services/supabase.server";
 
 const error = {
   hidden: { opacity: 0, y: 20 },
@@ -32,84 +28,47 @@ export const action: ActionFunction = async ({ request }) => {
       return { error: "Please enter your netId" };
     }
 
-    const member = await members
-      .select({ filterByFormula: `{Net ID} = '${netId.toLowerCase().trim()}'` })
-      .firstPage();
+    const isMember = await checkIfMember(netId);
 
-    if (member.length === 0) {
+    if (!isMember) {
       return { error: "Net ID not found" };
     }
 
-    const events = await getEventsToday();
+    const shirtStatus = await shirtCheckIn(netId);
+
+    if (shirtStatus === "error") {
+      return { error: "Error checking in" };
+    }
 
     return {
       hasMember: true,
-      memberInfo: {
-        id: member[0].id,
-        name: member[0].fields["First Name"],
-        netId: member[0].fields["Net ID"],
-      },
-      events,
+      checkedIn: shirtStatus === "success",
+      alreadyCheckedIn: shirtStatus === "alreadyCheckedIn",
     };
-  } else if (formStep === "event") {
-    const eventId = formData.get("eventId");
-    const userId = formData.get("userId");
-    const hasPlusOne = formData.get("hasPlusOne");
-
-    if (typeof eventId !== "string" || typeof userId !== "string") {
-      return { error: "Please select an event" };
-    }
-
-    const checkInStatus = await checkInMember(
-      eventId,
-      userId,
-      hasPlusOne ? 2 : 1
-    );
-
-    console.log("checkInStatus", checkInStatus);
-
-    if (checkInStatus === "success") {
-      return { checkedIn: true };
-    } else if (checkInStatus === "alreadyCheckedIn") {
-      return { alreadyCheckedIn: true };
-    } else {
-      return { error: "Something went wrong" };
-    }
   }
 };
 
-export const loader: LoaderFunction = async () => {
-  const events = await getEventsToday();
-  console.log(events);
-  return {};
-};
-
-export default function CheckInPage() {
+export default function ShirtPickupPage() {
   const data = useActionData();
   const [pageStep, setPageStep] = useState(1);
 
   useEffect(() => {
-    console.log("data", data);
-
-    if (data?.hasMember) {
+    if (data?.checkedIn) {
       setPageStep(2);
-    } else if (data?.checkedIn) {
-      setPageStep(3);
     } else if (data?.alreadyCheckedIn) {
-      setPageStep(4);
+      setPageStep(3);
     }
   }, [data]);
 
   return (
     <ContentContainer>
       <div className="text-center max-w-lg mx-auto py-6">
-        <h1 className="font-bold text-2xl text-center">Check In</h1>
+        <h1 className="font-bold text-2xl text-center">Shirt Pickup</h1>
         <h2 className="text-lg text-gray-600 mb-4 text-center">
-          Are you at an activity? Then you have come to the right place to check
-          in.
+          Pickup your shirt! Enter your Net ID to get started.
         </h2>
 
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
           <motion.div
             key={pageStep}
             initial={{ y: 10, opacity: 0 }}
@@ -119,13 +78,7 @@ export default function CheckInPage() {
           >
             {pageStep === 1 ? (
               <IdForm />
-            ) : pageStep === 2 ? (
-              <EventForm
-                userName={data?.memberInfo?.name}
-                userId={data?.memberInfo?.netId ?? ""}
-                events={data?.events ?? []}
-              />
-            ) : pageStep == 3 ? (
+            ) : pageStep == 2 ? (
               <div className="max-w-30 h-30">
                 <div className="rounded-full w-30 h-40 mx-auto flex items-center justify-center bg-green-600 text-white mb-2">
                   <CheckIcon className="w-24 h-24" />
@@ -137,8 +90,8 @@ export default function CheckInPage() {
                   <InformationCircleIcon className="w-24 h-24" />
                 </div>
                 <p className="font-semibold text-lg text-gray-700">
-                  It looks like you already checked in... If this is a mistake,
-                  let us know or{" "}
+                  It looks like you already checked in for a shirt... If this is
+                  a mistake, let us know or{" "}
                   <a href="/check-in" className="text-blue underline">
                     try again.
                   </a>
@@ -153,7 +106,7 @@ export default function CheckInPage() {
           animate={data?.error ? "show" : "hidden"}
           initial="hidden"
         >
-          <p className="text-red-500 text-sm font-bold text-center capitalize">
+          <p className="text-red-500 text-sm font-bold text-center capitalize my-1">
             {data?.error || ""}
           </p>
           <p className="font-semibold ">
@@ -164,7 +117,7 @@ export default function CheckInPage() {
             >
               here
             </a>{" "}
-            or talk to a volunteer at the event.
+            or talk to a volunteer
           </p>
         </motion.div>
       </div>
