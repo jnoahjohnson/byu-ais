@@ -3,19 +3,31 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import ContentContainer from "~/components/layout/content-container";
-import {
-  checkInMember,
-  getEventsToday,
-  members,
-} from "~/services/airtable.server";
 import IdForm from "~/components/check-in/id-form";
 import EventForm from "~/components/check-in/event-form";
 import { CheckIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
+import { checkInMember, db, getEventsToday } from "~/services/db.server";
 
 const error = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+// const container = {
+//   hidden: {
+//     opacity: 0,
+//     x: 100,
+//     transition: { duration: 0.5 },
+//   },
+//   show: {
+//     opacity: 1,
+//     x: 0,
+//     transition: {
+//       duration: 0.5,
+//       delay: 0.5,
+//     },
+//   },
+// };
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -32,11 +44,13 @@ export const action: ActionFunction = async ({ request }) => {
       return { error: "Please enter your netId" };
     }
 
-    const member = await members
-      .select({ filterByFormula: `{Net ID} = '${netId.toLowerCase().trim()}'` })
-      .firstPage();
+    const member = await db.members.findFirst({
+      where: {
+        netId: netId.toLowerCase(),
+      },
+    });
 
-    if (member.length === 0) {
+    if (!member) {
       return { error: "Net ID not found" };
     }
 
@@ -45,9 +59,7 @@ export const action: ActionFunction = async ({ request }) => {
     return {
       hasMember: true,
       memberInfo: {
-        id: member[0].id,
-        name: member[0].fields["First Name"],
-        netId: member[0].fields["Net ID"],
+        netId: member.netId,
       },
       events,
     };
@@ -61,7 +73,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     const checkInStatus = await checkInMember(
-      eventId,
+      parseInt(eventId),
       userId,
       hasPlusOne ? 2 : 1
     );
@@ -121,7 +133,6 @@ export default function CheckInPage() {
               <IdForm />
             ) : pageStep === 2 ? (
               <EventForm
-                userName={data?.memberInfo?.name}
                 userId={data?.memberInfo?.netId ?? ""}
                 events={data?.events ?? []}
               />
