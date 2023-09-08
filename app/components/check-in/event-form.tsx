@@ -1,21 +1,20 @@
+import type { Event } from "@prisma/client";
 import { Form, useTransition } from "@remix-run/react";
 import { useState } from "react";
 
 export default function EventForm({
   userId,
   events,
-  userName,
 }: {
   userId: string;
-  events: any[];
-  userName: string;
+  events: Event[];
 }) {
-  const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<number | null>(null);
   const transition = useTransition();
 
   return (
     <div className="text-left">
-      <h2 className="text-2xl font-bold mb-4">Hi {userName}!</h2>
+      <h2 className="text-2xl font-bold mb-4">Welcome!</h2>
       <h3 className="text-lg font-semibold text-gray-700">Select the Event</h3>
       {events.map((event) => (
         <button
@@ -32,7 +31,7 @@ export default function EventForm({
               : setSelectedEvent(event.id)
           }
         >
-          <p className="font-bold text-xl">{event.title}</p>
+          <p className="font-bold text-xl">{event.name}</p>
         </button>
       ))}
       <Form method="post">

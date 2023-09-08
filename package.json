@@ -13,6 +13,7 @@
   "dependencies": {
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^2.0.8",
+    "@prisma/client": "^5.2.0",
     "@remix-run/node": "^1.7.0",
     "@remix-run/react": "^1.7.0",
     "@remix-run/vercel": "^1.7.0",
@@ -22,7 +23,7 @@
     "@vercel/node": "^2.4.4",
     "airtable": "^0.11.4",
     "framer-motion": "^7.2.1",
-    "luxon": "^3.0.3",
+    "luxon": "^3.4.3",
     "picosanity": "^4.0.0",
     "react": "^18.2.0",
     "react-audio-player": "^0.17.0",
@@ -38,6 +39,7 @@
     "@types/react-dom": "^18.0.6",
     "eslint": "^8.20.0",
     "npm-run-all": "^4.1.5",
+    "prisma": "^5.2.0",
     "tailwindcss": "^3.1.8",
     "typescript": "^4.7.4"
   },
