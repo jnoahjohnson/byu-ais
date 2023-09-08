@@ -8,7 +8,8 @@
     "dev": "run-p \"dev:*\"",
     "dev:css": "npm run generate:css -- --watch",
     "dev:remix": "remix dev",
-    "generate:css": "npx tailwindcss -o ./app/tailwind.css"
+    "generate:css": "npx tailwindcss -o ./app/tailwind.css",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
