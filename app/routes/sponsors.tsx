@@ -31,7 +31,7 @@ export default function SponsorsPage() {
           title="Sponsors"
           subtitle=" We have incredible sponsors. They support the club activities and
             students. Throughout the semester there are info sessions with our
-            sponsors to learn more abou the opportunities that they provide"
+            sponsors to learn more about the opportunities that they provide"
         />
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
           {sponsors.map(({ name, logo }) => (
