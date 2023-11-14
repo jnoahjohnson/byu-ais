@@ -3,11 +3,12 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import ContentContainer from "~/components/layout/content-container";
 import PageHeader from "~/components/page-header";
+import { SponsorInfo } from "~/services/supabase.server";
 
 import { getSponsors } from "~/services/airtable.server";
 
 export const loader: LoaderFunction = async () => {
-  const sponsors = await getSponsors();
+  const sponsors = await SponsorInfo();
 
   return json(
     { sponsors },

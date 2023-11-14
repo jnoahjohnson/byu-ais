@@ -24,3 +24,17 @@ export const checkIfMember = async (netId: string) => {
 
   return true;
 };
+
+export const SponsorInfo = async () => {
+  const { data, error } = await supabase
+    .from("Sponsors")
+    .select("*");
+
+  console.log("data", data, error);
+
+  if (error) {
+    return [];
+  }
+
+  return data;
+};
